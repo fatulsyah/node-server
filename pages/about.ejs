@@ -5,5 +5,11 @@
   <body>
     <% include partial/judul.ejs %>
     <p>About Page</p>
+    <p>Current Page: <%= page %></p>
+    <p>Created at: <%= created %></p>
+
+    <ul>
+      <%= products.pages[page] %>
+    </ul>
   </body>
 </html>
