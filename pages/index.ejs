@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <%include partial/header.ejs %>
+  <body>
+    <% include partial/judul.ejs %>
+
+    <h1><%= orang %>!</h1>
+    <p>~ Ini webpage paling unyu sedunia ~</p>
+    <p id="data-user"></p>
+
+    <ul id="products">
+      <h1>Data Products</h1>
+      <% for (i=0; i < products.length; i++) { %>
+      <li><%= products[i] %></li>
+      <% } %>
+    </ul>
+    <ul>
+      <li><a href="/profil">Profil</a></li>
+      <li><a href="/berita">Berita</a></li>
+      <li><a href="/galeri">Galeri</a></li>
+      <li><a href="/tentang">Tentang</a></li>
+      <li><a href="/kontak">Kontak</a></li>
+    </ul>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      $.ajax({
+        method: "GET",
+        url: "http://localhost:3000",
+        success: function(res) {
+          console.log(res);
+          $("#data-user").html("Nama: " + res.nama + ", Usia: " + res.usia);
+        }
+      });
+    </script>
+  </body>
+</html>

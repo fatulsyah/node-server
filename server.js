@@ -1,6 +1,26 @@
 var http = require("http");
 var fs = require("fs");
+var chalk = require("chalk");
+var slug = require("slug");
+var moment = require("moment");
+var argv = require("yargs").argv;
+
+var satu = slug("NodeJS ♥ is ☢");
+var dua = slug("I <3 NodeJS");
 var PORT = 3001;
+
+console.log(satu);
+console.log(dua);
+
+console.log(moment().format("dddd, MMMM Do YYYY, h:mm:ss a"));
+console.log(moment([2007, 0, 29]).fromNow(true));
+
+console.log("Usia:", argv.usia);
+if (argv.usia >= 25) {
+  console.log("Ingat umur, kak!");
+} else {
+  console.log("Enjoy your life!");
+}
 
 var server = http.createServer(function(req, res) {
   if (req.url === "/") {
@@ -28,4 +48,4 @@ var server = http.createServer(function(req, res) {
 });
 
 server.listen(PORT);
-console.log("Server active, listening on PORT:", PORT);
+console.log(chalk.green("Server active, "), "listening on PORT:", PORT);
