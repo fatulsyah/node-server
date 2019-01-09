@@ -1,5 +1,7 @@
 var express = require("express");
 var app = express();
+var bodyParser = require("body-parser");
+var url = bodyParser.urlencoded({ extended: false });
 
 app.set("view engine", "ejs"); // views folder default
 app.set("views", __dirname + "/pages"); // custom folder
@@ -33,6 +35,16 @@ app.get("/about", function(req, res) {
   res.status(200);
   res.render("about", { page: currentPage, created: createdAt, products });
 });
+
+app.get("/kontak", function(req, res) {
+  res.render("formulir");
+});
+app.post("/kontak-post", url, function(req, res) {
+  console.log(req.body);
+  console.log(res.res);
+  res.render("form_success", { data: req.body });
+});
+
 app.get("*", function(req, res) {
   console.log(req.query);
   res.status(404);
