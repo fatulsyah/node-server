@@ -1,18 +1,16 @@
-<p>News Page</p>
+<p>Single News Page</p>
 <div id="news"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
   $.ajax({
     method: "GET",
-    url: "http://localhost:3000/api/books",
+    url: "http://localhost:3000/api/book/1",
     success: function(res) {
       var news = "";
-      $.each(res.data, function(idx, val) {
-        news += "<p>";
-        news += "Judul Buku: " + val.title;
-        news += "</p>";
-      });
+      news += "<p>";
+      news += "Judul Buku: " + res.data.title;
+      news += "</p>";
       $("#news").html(news);
     }
   });

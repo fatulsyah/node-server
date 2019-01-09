@@ -16,29 +16,41 @@ app.get("/api/books", function(req, res) {
   res.status(200);
   res.send({
     type: "GET",
-    data: {
-      nama: "Andi"
-    }
+    data: [
+      {
+        title: "Buku 1",
+        totalPage: 20
+      },
+      {
+        title: "Buku 2",
+        totalPage: 200
+      }
+    ]
   });
 });
 // ambil data buku spesifik
 app.get("/api/book/:id", function(req, res) {
   res.status(200);
+  // query to DB get data book based on req.body.id
+  // repo.books.update(id, data);
   res.send({
     type: "GET",
     data: {
-      nama: "Andi"
+      title: "Buku 1",
+      totalPage: 20
     }
   });
 });
 
-app.post("/api", function(req, res) {
+app.post("/api/books", function(req, res) {
   res.status(200);
+  // save data to database
+  // query to DB based on `req.body`
+  // send API response
   res.send({
     type: "POST",
-    data: {
-      nama: "Andi"
-    }
+    status: "success",
+    message: "Anda berhasil menambahkan data buku"
   });
 });
 
