@@ -5,11 +5,13 @@
 <script>
   $.ajax({
     method: "GET",
-    url: "http://localhost:3000/api/book/1",
+    // url: "http://localhost:3000/api/book/1",
+    url:
+      "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=twitterapi&count=2",
     success: function(res) {
       var news = "";
       news += "<p>";
-      news += "Judul Buku: " + res.data.title;
+      news += "Tweet: " + res;
       news += "</p>";
       $("#news").html(news);
     }

@@ -1,5 +1,7 @@
 <p>News Page</p>
 <div id="news"></div>
+<h1>Karyawan</h1>
+<div id="karyawans"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
@@ -14,6 +16,20 @@
         news += "</p>";
       });
       $("#news").html(news);
+    }
+  });
+
+  $.ajax({
+    method: "GET",
+    url: "http://localhost:3030/api/karyawans",
+    success: function(res) {
+      var karyawans = "";
+      $.each(res, function(idx, val) {
+        karyawans += "<p>";
+        karyawans += "nama: " + val.nama + ", usia: " + val.usia;
+        karyawans += "</p>";
+      });
+      $("#karyawans").html(karyawans);
     }
   });
 </script>

@@ -2,6 +2,14 @@ var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 var cors = require("cors");
+const mysql = require("mysql");
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "mysecretpassword",
+  database: "toko"
+});
+db.connect();
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -12,58 +20,63 @@ app.get("/", function(req, res) {
 });
 
 // ambil semua data buku
-app.get("/api/books", function(req, res) {
-  res.status(200);
-  res.send({
-    type: "GET",
-    data: [
-      {
-        title: "Buku 1",
-        totalPage: 20
-      },
-      {
-        title: "Buku 2",
-        totalPage: 200
-      }
-    ]
+app.get("/api/karyawan", function(req, res) {
+  var sql = "SELECT * FROM karyawan";
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.status(200);
+    res.send({
+      type: "GET",
+      data: result
+    });
   });
 });
 // ambil data buku spesifik
-app.get("/api/book/:id", function(req, res) {
+app.get("/api/karyawan/:id", function(req, res) {
   res.status(200);
   // query to DB get data book based on req.body.id
   // repo.books.update(id, data);
-  res.send({
-    type: "GET",
-    data: {
-      title: "Buku 1",
-      totalPage: 20
-    }
+  // select * from books where book_id=${id}
+  var sql = `SELECT * FROM karyawan WHERE id=${req.params.id}`;
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.status(200);
+    res.send({
+      type: "GET",
+      data: result
+    });
   });
 });
 
-app.post("/api/books", function(req, res) {
+app.post("/api/karyawan", function(req, res) {
   res.status(200);
   // save data to database
   // query to DB based on `req.body`
   // send API response
-  res.send({
-    type: "POST",
-    status: "success",
-    message: "Anda berhasil menambahkan data buku"
+  var data = req.body;
+  var sql = "INSERT INTO karyawan SET ?";
+  db.query(sql, data, (err, result) => {
+    if (err) throw err;
+    res.send({
+      type: "POST",
+      status: "success",
+      message: "Anda berhasil menambahkan data karyawan"
+    });
   });
 });
 
-app.put("/api/:id", function(req, res) {
+app.put("/api/karyawan/:id", function(req, res) {
   res.status(200);
   var id = req.params.id;
-  res.send({
-    type: "PUT",
-    data: {
-      id: 1,
-      nama: "Andi",
-      usia: 21
-    }
+  var data = req.body;
+  var sql = "UPDATE karyawan SET ? WHERE id=?";
+  db.query(sql, [data, id], (err, result) => {
+    if (err) throw err;
+    res.send({
+      type: "PUT",
+      status: "success",
+      message: "Anda berhasil memperbaharui data karyawan"
+    });
   });
 });
 
